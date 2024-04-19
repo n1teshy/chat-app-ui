@@ -1,0 +1,17 @@
+#!/usr/bin/env sh
+
+staged_files=$(git diff --cached --name-only)
+
+for file in $staged_files; do
+  # check if file exists and is vue/js/json/html/css
+  if [[ -e "$file" && "$file" =~ .*\.(vue|js|json|html|css)$ ]]; then
+    if ! npm run format "$file"; then
+      # if prettier failed, unstage all staged files and exit
+      for failed_file in $staged_files; do
+        git restore --staged $failed_file
+      done
+      exit 1
+    fi
+    git add "$file"
+  fi
+done
