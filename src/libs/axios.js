@@ -1,11 +1,18 @@
 import baseAxios from "axios";
+import { useAuthStore } from "../stores/auth.js";
 
 export const axios = baseAxios.create({
   baseURL: "http://localhost:9000",
 });
 
 axios.interceptors.request.use(
-  (config) => config,
+  (config) => {
+    const auth = useAuthStore();
+    if (auth.authToken !== null) {
+      config.headers["Authorization"] = auth.authToken;
+    }
+    return config;
+  },
   (error) => Promise.reject(error),
 );
 
