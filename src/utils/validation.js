@@ -30,6 +30,7 @@ export function resetFieldErrors(form, fieldErrors) {
 }
 
 export function setValidationErrors(form, fieldErrors, validationErrors) {
+  resetFieldErrors(form, fieldErrors);
   for (const nestedErrors of validationErrors) {
     for (const error of nestedErrors) {
       const field = error.field;
@@ -38,5 +39,18 @@ export function setValidationErrors(form, fieldErrors, validationErrors) {
       fieldError.feedback = error.message;
       fieldError.validationStatus = "error";
     }
+  }
+}
+
+export function setErrors(form, fieldErrors, errors) {
+  resetFieldErrors(form, fieldErrors);
+  for (const key in errors) {
+    if (isObject(errors[key])) {
+      setErrors(form[key], fieldErrors[key], errors[key]);
+      continue;
+    }
+    fieldErrors[key].hasError = true;
+    fieldErrors[key].feedback = errors[key];
+    fieldErrors[key].validationStatus = "error";
   }
 }
