@@ -36,6 +36,11 @@ export const useAuthStore = defineStore("auth", {
       this.user = await usersApi.getSelf();
     },
 
+    async restoreSession() {
+      this.token = storage.get(STORAGE_TOKEN_KEY);
+      await this.initSession();
+    },
+
     clearSession() {
       this.$reset();
       storage.delete(STORAGE_TOKEN_KEY);
