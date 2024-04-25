@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import authApi from "../api/auth.js";
-import usersApi from "../api/users.js";
+import usersApi from "../api/user.js";
 import storage from "../utils/storage.js";
 import { STORAGE_TOKEN_KEY } from "../utils/constants.js";
 
