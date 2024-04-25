@@ -17,6 +17,8 @@ export const useAuthStore = defineStore("auth", {
       const { first, last } = state.user.name;
       return last ? `${first} ${last}` : first;
     },
+
+    currentUser: (state) => state.user,
   },
 
   actions: {
