@@ -10,7 +10,7 @@ const message = useMessage();
 const router = useRouter();
 
 const username = ref(null);
-const fetchInProgress = ref(false);
+const isFetchInProgress = ref(false);
 const users = ref([]);
 
 async function _updateUsers(username) {
@@ -20,19 +20,18 @@ const updateUsers = debounce(_updateUsers, 400);
 
 async function onChangeUsername(value) {
   try {
-    fetchInProgress.value = true;
+    isFetchInProgress.value = true;
     username.value = value;
     await updateUsers(value);
   } catch (e) {
     message.error("Something went wrong fam, mind trying later?");
   } finally {
-    fetchInProgress.value = false;
+    isFetchInProgress.value = false;
   }
 }
 
 async function onDialogRequest(userId) {
   try {
-    console.log("getting dialog with ", userId);
     const dialog = await dialogApis.addDialog({ with: userId });
     router.push({ name: "dialog", params: { dialogId: dialog.id } });
   } catch (e) {
@@ -48,6 +47,7 @@ onMounted(async () => await _updateUsers(null));
       <n-input
         :value="username"
         @update-value="onChangeUsername"
+        :loading="isFetchInProgress"
         placeholder=""
         size="large"
       />
