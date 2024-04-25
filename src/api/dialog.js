@@ -5,6 +5,10 @@ export default {
     return axios.get("/dialogs");
   },
 
+  getDialog(id) {
+    return axios.get(`/dialogs/${id}`);
+  },
+
   addDialog(data) {
     return axios.post("/dialogs", data);
   },
