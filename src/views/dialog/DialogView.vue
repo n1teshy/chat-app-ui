@@ -107,14 +107,14 @@ onMounted(fetchData);
       </div>
     </div>
     <div class="w-full flex mt-3 fixed bottom-0">
-      <div class="w-[90%] md:w-[95%] bg-red-200">
+      <div class="w-[85%] md:w-[95%] bg-red-200">
         <n-input
           v-model:value="messageText"
           placeholder=""
           size="large"
         />
       </div>
-      <div class="w-[10%] md:w-[5%] flex justify-center items-center">
+      <div class="w-[15%] md:w-[5%] flex justify-center items-center">
         <n-button
           @click="onSend"
           :disabled="messageText === null"
