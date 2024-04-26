@@ -69,6 +69,7 @@ async function onSave() {
           >
             <n-input
               v-model:value="form.password"
+              type="password"
               placeholder=""
             />
           </form-item>
