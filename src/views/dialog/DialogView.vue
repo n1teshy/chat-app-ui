@@ -11,7 +11,9 @@ import messageApis from "../../api/message.js";
 const route = useRoute();
 const dialogId = route.params.dialogId;
 const auth = useAuthStore();
-const socket = io("http://localhost:9000", { auth: { token: auth.authToken } });
+const socket = io(import.meta.env.VITE_SOCKET_ENDPOINT, {
+  auth: { token: auth.authToken },
+});
 const message = useMessage();
 
 const isFetchInProgress = ref(false);
