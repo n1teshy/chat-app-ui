@@ -1,5 +1,4 @@
 import baseAxios from "axios";
-import { useRouter } from "vue-router";
 import { useAuthStore } from "../stores/auth.js";
 
 export const axios = baseAxios.create({
@@ -28,25 +27,23 @@ axios.interceptors.response.use(
   (response) => response.data,
   (error) => {
     const status = error?.response?.status;
+    let data = {
+      message: error.message ?? "Something went wrong, please try again later",
+    };
     if (status) {
       if (status === 422) {
-        return Promise.reject({ validation: error.response.data });
-      }
-      if (
+        data = { validation: error.response.data };
+      } else if (
         status === STATUS_BAD_REQUEST ||
         status === STATUS_FORBIDDEN ||
         status === STATUS_UNAUTHORIZED ||
         status === STATUS_NOT_FOUND
       ) {
-        const router = useRouter();
         const auth = useAuthStore();
         auth.clearSession();
-        router.push({ name: "login" });
-        return;
+        window.location.href = "/ui/login";
       }
     }
-    return Promise.reject({
-      message: error.message ?? "Something went wrong, please try again later",
-    });
+    return Promise.reject(data);
   },
 );
