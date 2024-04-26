@@ -79,7 +79,10 @@ onMounted(fetchData);
   >
     <n-spin size="large" />
   </div>
-  <template v-else-if="otherGuy !== null">
+  <div
+    v-else-if="otherGuy !== null"
+    class="h-screen"
+  >
     <div class="sticky top-0 bg-white flex p-2">
       <div class="flex justify-center items-center mr-2">
         <fa-icon
@@ -101,7 +104,7 @@ onMounted(fetchData);
         </p>
       </div>
     </div>
-    <div class="w-full flex mt-3 sticky bottom-0">
+    <div class="w-full flex mt-3 fixed bottom-0">
       <div class="w-[90%] md:w-[95%] bg-red-200">
         <n-input
           v-model:value="messageText"
@@ -122,5 +125,5 @@ onMounted(fetchData);
         </n-button>
       </div>
     </div>
-  </template>
+  </div>
 </template>
