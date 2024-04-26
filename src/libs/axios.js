@@ -26,6 +26,7 @@ const [
 axios.interceptors.response.use(
   (response) => response.data,
   (error) => {
+    console.log(error);
     const status = error?.response?.status;
     let data = {
       message: error.message ?? "Something went wrong, please try again later",
@@ -41,7 +42,7 @@ axios.interceptors.response.use(
       ) {
         const auth = useAuthStore();
         auth.clearSession();
-        window.location.href = "/ui/login";
+        // window.location.href = "/ui/login";
       }
     }
     return Promise.reject(data);
