@@ -9,6 +9,7 @@ export async function checkAuth(to) {
       await auth.restoreSession();
       return true;
     }
-    if (to.name !== "login") return { name: "login" };
+    if (to.name !== "login" && to.name !== "registration")
+      return { name: "login" };
   }
 }
