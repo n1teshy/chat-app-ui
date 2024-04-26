@@ -24,7 +24,7 @@ async function onChangeUsername(value) {
     username.value = value;
     await updateUsers(value);
   } catch (e) {
-    message.error("Something went wrong fam, mind trying later?");
+    message.error(e.message);
   } finally {
     isFetchInProgress.value = false;
   }
@@ -35,7 +35,7 @@ async function onDialogRequest(userId) {
     const dialog = await dialogApis.addDialog({ with: userId });
     router.push({ name: "dialog", params: { dialogId: dialog.id } });
   } catch (e) {
-    message.error("Something went wrong fam, mind trying later?");
+    message.error(e.message);
   }
 }
 
