@@ -114,9 +114,7 @@ onMounted(fetchData);
           size="large"
         />
       </div>
-      <div
-        class="w-[15%] md:w-[5%] flex justify-center items-center bg-red-200"
-      >
+      <div class="w-[15%] md:w-[5%] flex justify-center items-center">
         <n-button
           @click="onSend"
           :disabled="messageText === null"
