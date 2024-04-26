@@ -94,8 +94,7 @@ onMounted(fetchData);
     v-else-if="otherGuy !== null"
     class="h-screen flex-col"
   >
-    <!-- profile -->
-    <div class="sticky top-0 bg-white flex p-2">
+    <div class="sticky top-0 bg-white flex p-2 mb-2">
       <div class="flex justify-center items-center mr-2">
         <fa-icon
           :icon="['fas', 'user']"
@@ -119,10 +118,8 @@ onMounted(fetchData);
         </p>
       </div>
     </div>
-
-    <!-- input field and button -->
-    <div class="w-full flex py-2 bg-white sticky bottom-0">
-      <div class="w-[85%] md:w-[95%]">
+    <div class="w-full flex mt-3 fixed bottom-0">
+      <div class="w-[85%] md:w-[95%] bg-red-200">
         <n-input
           ref="inputRef"
           v-model:value="messageText"
