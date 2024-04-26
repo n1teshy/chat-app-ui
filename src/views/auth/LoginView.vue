@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-import { NButton, NCard, NInput } from "naive-ui";
+import { NButton, NCard, NInput, useMessage } from "naive-ui";
 import FormItem from "../../components/FormItem.vue";
 import FormWrapper from "../../components/FormWrapper.vue";
 import { useAuthStore } from "../../stores/auth.js";
@@ -13,6 +13,7 @@ import {
 
 const auth = useAuthStore();
 const router = useRouter();
+const message = useMessage();
 
 const formRef = ref(null);
 const form = ref({ username: null, password: null });
@@ -37,7 +38,10 @@ async function onSave() {
     await auth.login(form.value.username, form.value.password);
     router.push({ name: "home" });
   } catch (e) {
-    setErrors(form.value, fieldErrors.value, e);
+    if (e.message) {
+      message.error(e.message);
+    }
+    setErrors(form.value, fieldErrors.value, e.validation);
   } finally {
     isSubmitInProgress.value = false;
   }
