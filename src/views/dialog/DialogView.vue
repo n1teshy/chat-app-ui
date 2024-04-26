@@ -106,7 +106,7 @@ onMounted(fetchData);
         </p>
       </div>
     </div>
-    <div class="w-full flex mt-3 fixed bottom-0">
+    <div class="w-full flex my-2 fixed bottom-0">
       <div class="w-[85%] md:w-[95%] bg-red-200">
         <n-input
           v-model:value="messageText"
@@ -114,7 +114,9 @@ onMounted(fetchData);
           size="large"
         />
       </div>
-      <div class="w-[15%] md:w-[5%] flex justify-center items-center">
+      <div
+        class="w-[15%] md:w-[5%] flex justify-center items-center bg-red-200"
+      >
         <n-button
           @click="onSend"
           :disabled="messageText === null"
