@@ -1,7 +1,7 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
-import { NCard, NInput, useMessage } from "naive-ui";
+import { NCard, NInput, NList, NListItem, useMessage } from "naive-ui";
 import debounce from "debounce";
 import dialogApis from "../api/dialog.js";
 import usersApis from "../api/user.js";
@@ -51,21 +51,29 @@ onMounted(async () => await _updateUsers(null));
         placeholder=""
         size="large"
       />
-      <div class="mt-4">
-        <div
+      <n-list
+        hoverable
+        clickable
+      >
+        <n-list-item
           v-for="user in users"
-          :key="user.id"
+          @click="onDialogRequest(user.id)"
           class="my-1"
         >
-          <div
-            @click="onDialogRequest(user.id)"
-            class="cursor-pointer"
-          >
-            <b>{{ user.name.first }}</b>
-            <p>{{ user.username }}</p>
+          <div class="flex">
+            <div class="flex justify-center items-center pr-2">
+              <fa-icon
+                :icon="['fas', 'user']"
+                size="2xl"
+              />
+            </div>
+            <div>
+              <b>{{ user.name.first }}</b>
+              <p>{{ user.username }}</p>
+            </div>
           </div>
-        </div>
-      </div>
+        </n-list-item>
+      </n-list>
     </n-card>
   </div>
 </template>

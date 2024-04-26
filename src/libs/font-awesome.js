@@ -11,6 +11,7 @@ import {
   faTable as fasTable,
   faTabletButton as fasTabletButton,
   faTrash as fasTrash,
+  faUser as fasUser,
   faUsers as fasUsers,
   faXmark as fasXmark,
 } from "@fortawesome/free-solid-svg-icons";
@@ -26,6 +27,7 @@ library.add(
   fasTable,
   fasTabletButton,
   fasTrash,
+  fasUser,
   fasUsers,
   fasXmark,
 );
