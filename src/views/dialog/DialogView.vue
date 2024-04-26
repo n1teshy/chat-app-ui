@@ -1,5 +1,5 @@
 <script setup>
-import { nextTick, onMounted, ref } from "vue";
+import { onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
 import { NButton, NInput, NSpin, useMessage } from "naive-ui";
 import { io } from "socket.io-client";
@@ -80,6 +80,15 @@ onMounted(fetchData);
     <n-spin size="large" />
   </div>
   <template v-else>
+    <div class="sticky top-0 bg-white flex p-2">
+      <div class="flex justify-center items-center mr-2">
+        <fa-icon
+          :icon="['fas', 'user']"
+          size="2xl"
+        />
+      </div>
+      <b>{{ otherGuy.name.first }} {{ otherGuy.name.last }}</b>
+    </div>
     <div>
       <div
         v-for="(message, messageIndex) in messages"
