@@ -140,7 +140,10 @@ async function onSave() {
             />
           </form-item>
         </form-wrapper>
-        <div class="text-end">
+        <div class="flex justify-between">
+          <router-link :to="{ name: 'login' }">
+            <p class="text-green-500">Have an account?</p>
+          </router-link>
           <n-button
             @click="onSave"
             :loading="isSubmitInProgress"

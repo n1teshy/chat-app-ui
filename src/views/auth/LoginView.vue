@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from "vue";
-import { useRouter } from "vue-router";
+import { RouterLink, useRouter } from "vue-router";
 import { NButton, NCard, NInput, useMessage } from "naive-ui";
 import FormItem from "../../components/FormItem.vue";
 import FormWrapper from "../../components/FormWrapper.vue";
@@ -78,7 +78,10 @@ async function onSave() {
             />
           </form-item>
         </form-wrapper>
-        <div class="text-end">
+        <div class="flex justify-between">
+          <router-link :to="{ name: 'registration' }">
+            <p class="text-green-500">Don't have an account?</p>
+          </router-link>
           <n-button
             @click="onSave"
             :loading="isSubmitInProgress"
