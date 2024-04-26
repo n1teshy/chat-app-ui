@@ -79,7 +79,7 @@ onMounted(fetchData);
   >
     <n-spin size="large" />
   </div>
-  <template v-else>
+  <template v-else-if="otherGuy !== null">
     <div class="sticky top-0 bg-white flex p-2">
       <div class="flex justify-center items-center mr-2">
         <fa-icon
