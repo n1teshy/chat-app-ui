@@ -25,31 +25,18 @@ const lastMessagRef = ref(null);
 socket.on("message", (message) => {
   if (message.from === otherGuy.value.id) {
     messages.value.push(message);
+    setTimeout(scrollToLastMessage);
   }
 });
-
-async function fetchData() {
-  try {
-    isFetchInProgress.value = true;
-    const dialog = await dialogApis.getDialog(dialogId);
-    messages.value = await messageApis.getDialogMessages(dialogId);
-    const otherId =
-      dialog.from !== auth.currentUser.id ? dialog.from : dialog.to;
-    otherGuy.value = await userApis.getUser(otherId);
-    setTimeout(() =>
-      lastMessagRef.value.scrollIntoView({ behavior: "smooth" }),
-    );
-  } catch (e) {
-    message.error("Something went wrong fam, mind trying later?");
-  } finally {
-    isFetchInProgress.value = false;
-  }
-}
 
 function setLastMessageRef(messageIndex, node) {
   if (messageIndex === messages.value.length - 1) {
     lastMessagRef.value = node;
   }
+}
+
+function scrollToLastMessage() {
+  lastMessagRef.value.scrollIntoView({ behavior: "smooth" });
 }
 
 async function onSend() {
@@ -64,13 +51,27 @@ async function onSend() {
       content: messageText.value,
     });
     messageText.value = null;
-    setTimeout(() =>
-      lastMessagRef.value.scrollIntoView({ behavior: "smooth" }),
-    );
+    setTimeout(scrollToLastMessage);
   } catch (e) {
     message.error(
       "something went wrong while sending message, please try again later",
     );
+  }
+}
+
+async function fetchData() {
+  try {
+    isFetchInProgress.value = true;
+    const dialog = await dialogApis.getDialog(dialogId);
+    messages.value = await messageApis.getDialogMessages(dialogId);
+    const otherId =
+      dialog.from !== auth.currentUser.id ? dialog.from : dialog.to;
+    otherGuy.value = await userApis.getUser(otherId);
+    setTimeout(scrollToLastMessage);
+  } catch (e) {
+    message.error("Something went wrong fam, mind trying later?");
+  } finally {
+    isFetchInProgress.value = false;
   }
 }
 
@@ -103,6 +104,7 @@ onMounted(fetchData);
       <div
         v-for="(message, messageIndex) in messages"
         class="flex"
+        :key="messageIndex"
         :class="{ 'justify-end': message.from === auth.currentUser.id }"
         :ref="(node) => setLastMessageRef(messageIndex, node)"
       >
