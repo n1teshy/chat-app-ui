@@ -83,8 +83,9 @@ onMounted(fetchData);
   </div>
   <div
     v-else-if="otherGuy !== null"
-    class="h-screen"
+    class="h-screen flex-col"
   >
+    <!-- profile -->
     <div class="sticky top-0 bg-white flex p-2">
       <div class="flex justify-center items-center mr-2">
         <fa-icon
@@ -94,7 +95,9 @@ onMounted(fetchData);
       </div>
       <b>{{ otherGuy.name.first }} {{ otherGuy.name.last }}</b>
     </div>
-    <div>
+
+    <!-- messages -->
+    <div class="overflow-y-scroll flex-1">
       <div
         v-for="(message, messageIndex) in messages"
         class="flex"
@@ -106,12 +109,15 @@ onMounted(fetchData);
         </p>
       </div>
     </div>
-    <div class="w-full flex my-2 fixed bottom-0">
-      <div class="w-[85%] md:w-[95%] bg-red-200">
+
+    <!-- input field and button -->
+    <div class="w-full flex py-2 bg-white sticky bottom-0">
+      <div class="w-[85%] md:w-[95%]">
         <n-input
           v-model:value="messageText"
           placeholder=""
           size="large"
+          round
         />
       </div>
       <div class="w-[15%] md:w-[5%] flex justify-center items-center">
@@ -122,7 +128,7 @@ onMounted(fetchData);
         >
           <fa-icon
             :icon="['fas', 'paper-plane']"
-            size="lg"
+            size="xl"
           />
         </n-button>
       </div>
