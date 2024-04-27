@@ -1,7 +1,7 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
-import { NCard, NInput, NList, NListItem, useMessage } from "naive-ui";
+import { NCard, NInput, NList, NListItem, NSpin, useMessage } from "naive-ui";
 import debounce from "debounce";
 import dialogApis from "../api/dialog.js";
 import usersApis from "../api/user.js";
@@ -59,7 +59,17 @@ async function fetchData() {
 onMounted(fetchData);
 </script>
 <template>
-  <div class="h-screen w-full p-2">
+  <div
+    v-if="isFetchInProgress && users.length === 0"
+    class="text-center"
+  >
+    <n-spin size="large" />
+  </div>
+
+  <div
+    v-else
+    class="h-screen w-full p-2"
+  >
     <n-card>
       <n-input
         :value="username"
