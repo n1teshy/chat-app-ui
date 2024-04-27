@@ -23,7 +23,9 @@ const messageText = ref(null);
 const lastMessagRef = ref(null);
 
 socket.on("message", (message) => {
-  messages.value.push(message);
+  if (message.from === otherGuy.value.id) {
+    messages.value.push(message);
+  }
 });
 
 async function fetchData() {
