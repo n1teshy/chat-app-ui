@@ -20,6 +20,7 @@ const isFetchInProgress = ref(false);
 const otherGuy = ref(null);
 const messages = ref([]);
 const messageText = ref(null);
+const inputRef = ref(null);
 const lastMessagRef = ref(null);
 
 socket.on("message", (message) => {
@@ -41,6 +42,7 @@ function scrollToLastMessage() {
 
 async function onSend() {
   try {
+    inputRef.value.focus();
     messages.value.push({
       from: auth.currentUser.id,
       content: messageText.value,
@@ -118,6 +120,7 @@ onMounted(fetchData);
     <div class="w-full flex py-2 bg-white sticky bottom-0">
       <div class="w-[85%] md:w-[95%]">
         <n-input
+          ref="inputRef"
           v-model:value="messageText"
           placeholder=""
           size="large"
