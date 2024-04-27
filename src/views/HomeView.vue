@@ -12,6 +12,7 @@ const router = useRouter();
 const username = ref(null);
 const isFetchInProgress = ref(false);
 const users = ref([]);
+let peers = [];
 
 async function _updateUsers(username) {
   users.value = (await usersApis.getUsers(username)).data;
@@ -19,9 +20,13 @@ async function _updateUsers(username) {
 const updateUsers = debounce(_updateUsers, 400);
 
 async function onChangeUsername(value) {
+  username.value = value;
+  if (!value) {
+    users.value = peers;
+    return;
+  }
   try {
     isFetchInProgress.value = true;
-    username.value = value;
     await updateUsers(value);
   } catch (e) {
     message.error(e.message);
@@ -39,7 +44,19 @@ async function onDialogRequest(userId) {
   }
 }
 
-onMounted(async () => await _updateUsers(null));
+async function fetchData() {
+  try {
+    isFetchInProgress.value = true;
+    peers = await dialogApis.getPeers();
+    users.value = peers;
+  } catch (e) {
+    message.error(e.message);
+  } finally {
+    isFetchInProgress.value = false;
+  }
+}
+
+onMounted(fetchData);
 </script>
 <template>
   <div class="h-screen w-full p-2">

@@ -1,8 +1,8 @@
 import { axios } from "../libs/axios.js";
 
 export default {
-  getDialogs() {
-    return axios.get("/dialogs");
+  getPeers() {
+    return axios.get("/dialogs/peers");
   },
 
   getDialog(id) {
