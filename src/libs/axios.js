@@ -28,7 +28,10 @@ axios.interceptors.response.use(
   (error) => {
     const status = error?.response?.status;
     let data = {
-      message: error.message ?? "Something went wrong, please try again later",
+      message:
+        error.code === "ERR_NETWORK"
+          ? "Check your internet connection"
+          : "Something went wrong, please try again later",
     };
     if (status) {
       if (status === 422) {
