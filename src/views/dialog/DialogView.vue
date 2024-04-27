@@ -42,15 +42,19 @@ function scrollToLastMessage() {
 
 async function onSend() {
   try {
+    const message = messageText.value?.trim();
+    if (!message) {
+      return;
+    }
     inputRef.value.focus();
     messages.value.push({
       from: auth.currentUser.id,
-      content: messageText.value,
+      content: message,
     });
     socket.emit("message", {
       to: otherGuy.value.id,
       chat: dialogId,
-      content: messageText.value,
+      content: message,
     });
     messageText.value = null;
     setTimeout(scrollToLastMessage);
